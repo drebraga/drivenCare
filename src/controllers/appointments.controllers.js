@@ -6,3 +6,6 @@
         //     // .isBetween((data + checkin), (data + checkout), 'hour');
 
         // console.log(consulta);
+//         import dayjs from "dayjs";
+// import isBetween from "dayjs/plugin/isBetween.js";
+// dayjs.extend(isBetween)

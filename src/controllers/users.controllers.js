@@ -1,10 +1,9 @@
-import dayjs from "dayjs";
-import isBetween from "dayjs/plugin/isBetween.js";
-dayjs.extend(isBetween)
+import userServices from "../services/users.services.js";
 
 async function signUp(req, res, next) {
+    const { name, email, password } = req.body;
     try {
-        const body = req.body;
+        await userServices.signup({ name, email, password });
 
         return res.sendStatus(201);
     } catch (err) {
@@ -13,11 +12,13 @@ async function signUp(req, res, next) {
 }
 
 async function signIn(req, res, next) {
+    const { email, password } = req.body;
     try {
-        const body = req.body;
+        const token = await userServices.signin({ email, password });
 
-        return res.sendStatus(200);
+        return res.send({ token });
     } catch (err) {
+        console.log(err)
         next(err);
     }
 }

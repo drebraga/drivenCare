@@ -13,6 +13,12 @@ export default function handleAPIErrors(err, req, res, next) {
             .send({ message: err.message });
     }
 
+    if (err.name === "DuplicatedEmailError") {
+        return res
+            .status(httpStatus.CONFLICT)
+            .send({ message: err.message, email: err.email });
+    }
+
     return res
         .status(httpStatus.INTERNAL_SERVER_ERROR)
         .send({ error: "InternalServerError", message: "Internal Server Error" });

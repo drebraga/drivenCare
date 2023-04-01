@@ -10,7 +10,7 @@ const signUp = Joi.object({
         })
         .required(),
     password: Joi.string().required(),
-    confirmPassword: Joi.ref('password'),
+    confirmPassword: Joi.ref('password')
 });
 
 const signIn = Joi.object({
