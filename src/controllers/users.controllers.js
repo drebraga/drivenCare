@@ -18,7 +18,6 @@ async function signIn(req, res, next) {
 
         return res.send({ token });
     } catch (err) {
-        console.log(err)
         next(err);
     }
 }

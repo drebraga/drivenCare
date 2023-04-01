@@ -1,6 +1,7 @@
 import jwt from "jsonwebtoken";
-import usersRepository from "../repositories/users.repository";
-import errors from "../errors";
+import usersRepository from "../repositories/users.repository.js";
+import doctorsRepository from "../repositories/doctors.repository.js";
+import errors from "../errors.js";
 
 async function authentication(req, res, next) {
     const { authorization } = req.headers;
@@ -16,10 +17,12 @@ async function authentication(req, res, next) {
         try {
             if (error) throw errors.unauthorizedError();
 
-            const { rows: [user] } = await usersRepository.findById(decoded.userId);
+            const { rows: [user] } = (decoded.userType === "patient") ?
+                await usersRepository.findById(decoded.userId) :
+                await doctorsRepository.findById(decoded.userId)
             if (!user) throw errors.unauthorizedError();
 
-            res.locals.user = user;
+            res.locals.user = { ...user, userType: decoded.userType };
             next();
         } catch (err) {
             next(err);

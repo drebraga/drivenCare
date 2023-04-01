@@ -9,6 +9,15 @@ async function findByEmail(email) {
     );
 }
 
+async function findById(id) {
+    return await db.query(
+        `
+        SELECT * FROM patients WHERE id=$1
+        `,
+        [id]
+    );
+}
+
 async function newUser({ name, email, password }) {
     return await db.query(
         `
@@ -21,5 +30,5 @@ async function newUser({ name, email, password }) {
 }
 
 export default {
-    findByEmail, newUser
+    findByEmail, newUser, findById
 };

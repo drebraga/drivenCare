@@ -19,7 +19,7 @@ async function signin({ email, password }) {
     const validPassword = await bcrypt.compare(password, user.password);
     if (!validPassword) throw errors.invalidCredentialsError();
 
-    const token = jwt.sign({ userId: user.id }, process.env.SECRET_JWT);
+    const token = jwt.sign({ userId: user.id, userType: "patient" }, process.env.SECRET_JWT);
 
     return token;
 }
