@@ -23,7 +23,7 @@ function invalidCredentialsError() {
 function unauthorizedError() {
   return {
     name: "UnauthorizedError",
-    message: "You must sign in to continue",
+    message: "User unauthorized, try to sign in again to continue",
   };
 }
 
