@@ -18,6 +18,33 @@ async function findById(id) {
     );
 }
 
+async function findByName(name) {
+    return await db.query(
+        `
+        SELECT * FROM doctors WHERE name LIKE $1
+        `,
+        [name]
+    );
+}
+
+async function findBySpecialty(specialty) {
+    return await db.query(
+        `
+        SELECT * FROM doctors WHERE specialty LIKE $1
+        `,
+        [specialty]
+    );
+}
+
+async function findByLocalization(localization) {
+    return await db.query(
+        `
+        SELECT * FROM doctors WHERE address LIKE $1
+        `,
+        [localization]
+    );
+}
+
 async function newUser({ name, email, password, checkin, checkout, address, specialty }) {
     return await db.query(
         `
@@ -30,5 +57,6 @@ async function newUser({ name, email, password, checkin, checkout, address, spec
 }
 
 export default {
-    findByEmail, newUser, findById
+    findByEmail, newUser, findById,
+    findByName, findBySpecialty, findByLocalization
 };
