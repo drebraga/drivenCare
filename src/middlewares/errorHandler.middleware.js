@@ -1,7 +1,7 @@
 import httpStatus from "http-status";
 
 export default function handleAPIErrors(err, req, res, next) {
-  if (err.name === "UnprocessableEntityError") {
+  if (err.name === "UnprocessableEntityError" || err.name === "InvalidId") {
     return res
       .status(httpStatus.UNPROCESSABLE_ENTITY)
       .send({ message: err.message });
@@ -23,6 +23,10 @@ export default function handleAPIErrors(err, req, res, next) {
 
   if (err.name === "DuplicatedAppointmentError") {
     return res.status(httpStatus.CONFLICT).send({ message: err.message });
+  }
+
+  if (err.name === "AppointmentNotFound") {
+    return res.status(httpStatus.NOT_FOUND).send({ message: err.message });
   }
 
   console.log(err);

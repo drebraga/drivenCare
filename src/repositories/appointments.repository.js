@@ -14,12 +14,21 @@ async function findDuplicate({ doctorId, day, time }) {
   );
 }
 
-async function findByDoctorId(id) {
+async function findById({ status, doctorId, id }) {
   return await db.query(
     `
-    SELECT * FROM appointments WHERE "userId"=$1
+    SELECT * FROM appointments WHERE confirmed=$1 AND doctor_id=$2 AND "id"=$3
     `,
-    [id]
+    [status, doctorId, id]
+  );
+}
+
+async function confirm({ status, doctorId, id }) {
+  return await db.query(
+    `
+    UPDATE appointments SET confirmed = $1 WHERE doctor_id=$2 AND "id"=$3 
+    `,
+    [status, doctorId, id]
   );
 }
 
@@ -37,5 +46,6 @@ async function create({ doctorId, userId, day, time }) {
 export default {
   create,
   findDuplicate,
-  findByDoctorId,
+  findById,
+  confirm,
 };

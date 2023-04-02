@@ -25,7 +25,7 @@ appointmentsRoutes.post(
   appointmentsControllers.create
 );
 appointmentsRoutes.post(
-  "/doctor",
+  "/doctor/:id",
   authentication,
   appointmentsControllers.confirm
 );

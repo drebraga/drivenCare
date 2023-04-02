@@ -34,10 +34,26 @@ function duplicatedAppointmentError() {
   };
 }
 
+function appointmentNotFound() {
+  return {
+    name: "AppointmentNotFound",
+    message: "There's no appointment to confirm at this time",
+  };
+}
+
+function invalidId() {
+  return {
+    name: "InvalidId",
+    message: "Invalid format of id",
+  };
+}
+
 export default {
   unprocessableEntityError,
   invalidCredentialsError,
   duplicatedEmailError,
   unauthorizedError,
   duplicatedAppointmentError,
+  appointmentNotFound,
+  invalidId,
 };

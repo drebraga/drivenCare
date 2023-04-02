@@ -36,8 +36,12 @@ async function byDoctorId(req, res, next) {
 
 async function confirm(req, res, next) {
   try {
-    //     await appointmentsServices.signup({});
-    //     return res.sendStatus(202);
+    const id = +req.params.id;
+    const user = res.locals.user;
+
+    await appointmentsServices.confirm({ doctorId: user.id, id });
+
+    return res.sendStatus(202);
   } catch (err) {
     next(err);
   }
