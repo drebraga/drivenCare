@@ -21,7 +21,10 @@ async function findById(id) {
 async function findByName(name) {
     return await db.query(
         `
-        SELECT * FROM doctors WHERE name LIKE $1
+        SELECT
+            id, name, specialty, address
+        FROM doctors 
+        WHERE name LIKE $1
         `,
         [name]
     );
@@ -30,7 +33,10 @@ async function findByName(name) {
 async function findBySpecialty(specialty) {
     return await db.query(
         `
-        SELECT * FROM doctors WHERE specialty LIKE $1
+        SELECT
+            id, name, specialty, address
+        FROM doctors 
+        WHERE specialty LIKE $1
         `,
         [specialty]
     );
@@ -39,7 +45,10 @@ async function findBySpecialty(specialty) {
 async function findByLocalization(localization) {
     return await db.query(
         `
-        SELECT * FROM doctors WHERE address LIKE $1
+        SELECT
+            id, name, specialty, address
+        FROM doctors 
+        WHERE address LIKE $1
         `,
         [localization]
     );

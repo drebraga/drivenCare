@@ -1,7 +1,7 @@
 import jwt from "jsonwebtoken";
 import usersRepository from "../repositories/users.repository.js";
 import doctorsRepository from "../repositories/doctors.repository.js";
-import errors from "../errors.js";
+import errors from "../errors/index.js";
 
 async function authentication(req, res, next) {
     const { authorization } = req.headers;
