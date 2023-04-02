@@ -12,14 +12,30 @@ appointmentsRoutes.get(
   "/patient",
   authentication,
   userTypeValidate("patient"),
-  appointmentsControllers.byUserId
+  appointmentsControllers.patientSchedule
 );
+
+appointmentsRoutes.get(
+  "/patient/:doctorId",
+  authentication,
+  userTypeValidate("patient"),
+  appointmentsControllers.doctorSchedulePatient
+);
+
 appointmentsRoutes.get(
   "/doctor",
   authentication,
   userTypeValidate("doctor"),
-  appointmentsControllers.byDoctorId
+  appointmentsControllers.doctorScheduleDoctor
 );
+
+appointmentsRoutes.get(
+  "/doctor/:patientId",
+  authentication,
+  userTypeValidate("doctor"),
+  appointmentsControllers.history
+);
+
 appointmentsRoutes.post(
   "/patient",
   authentication,
@@ -28,6 +44,7 @@ appointmentsRoutes.post(
   hourAndDateValidation,
   appointmentsControllers.create
 );
+
 appointmentsRoutes.post(
   "/doctor/:id",
   authentication,

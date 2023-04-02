@@ -25,7 +25,11 @@ export default function handleAPIErrors(err, req, res, next) {
     return res.status(httpStatus.CONFLICT).send({ message: err.message });
   }
 
-  if (err.name === "AppointmentNotFound") {
+  if (
+    err.name === "AppointmentNotFound" ||
+    err.name === "PatientNotFound" ||
+    err.name === "DoctorNotFound"
+  ) {
     return res.status(httpStatus.NOT_FOUND).send({ message: err.message });
   }
 

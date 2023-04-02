@@ -43,9 +43,76 @@ async function create({ doctorId, userId, day, time }) {
   );
 }
 
+async function findByPatientId({ date, id }) {
+  return await db.query(
+    `
+    SELECT 
+      a.id, p.name as patient, d.name as doctor,
+      d.specialty, a.day, a.time, a.confirmed, a.canceled
+    FROM appointments a 
+    JOIN patients p ON p.id = a.patient_id
+    JOIN doctors d ON d.id = a.doctor_id
+    WHERE a.day>=$1 AND a."patient_id"=$2
+    ORDER BY a.day ASC
+    `,
+    [date, id]
+  );
+}
+
+async function findByDoctorId({ date, id }) {
+  return await db.query(
+    `
+    SELECT 
+      a.id, d.name as doctor,
+      d.specialty, a.day, a.time, a.confirmed, a.canceled
+    FROM appointments a 
+    JOIN doctors d ON d.id = a.doctor_id
+    WHERE a.day>=$1 AND a."doctor_id"=$2
+    ORDER BY a.day ASC
+    `,
+    [date, id]
+  );
+}
+
+async function findByDoctorIdvDoc({ date, id }) {
+  return await db.query(
+    `
+    SELECT 
+      a.id, p.name as patient, d.name as doctor,
+      d.specialty, a.day, a.time, a.confirmed, a.canceled
+    FROM appointments a 
+    JOIN patients p ON p.id = a.patient_id
+    JOIN doctors d ON d.id = a.doctor_id
+    WHERE a.day>=$1 AND a."patient_id"=$2
+    ORDER BY a.day ASC
+    `,
+    [date, id]
+  );
+}
+
+async function history({ date, id, confirmed, canceled }) {
+  return await db.query(
+    `
+    SELECT 
+      a.id, p.name as patient, d.name as doctor,
+      d.specialty, a.day, a.time
+    FROM appointments a 
+    JOIN patients p ON p.id = a.patient_id
+    JOIN doctors d ON d.id = a.doctor_id
+    WHERE a.day<=$1 AND a."patient_id"=$2 AND a.confirmed=$3 AND a.canceled=$4
+    ORDER BY a.day ASC
+    `,
+    [date, id, confirmed, canceled]
+  );
+}
+
 export default {
   create,
   findDuplicate,
   findById,
   confirm,
+  findByPatientId,
+  findByDoctorId,
+  findByDoctorIdvDoc,
+  history,
 };

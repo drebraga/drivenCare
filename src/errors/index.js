@@ -41,6 +41,20 @@ function appointmentNotFound() {
   };
 }
 
+function doctorNotFound() {
+  return {
+    name: "DoctorNotFound",
+    message: "No doctor found",
+  };
+}
+
+function patientNotFound() {
+  return {
+    name: "PatientNotFound",
+    message: "No patient found",
+  };
+}
+
 function invalidId() {
   return {
     name: "InvalidId",
@@ -56,4 +70,6 @@ export default {
   duplicatedAppointmentError,
   appointmentNotFound,
   invalidId,
+  doctorNotFound,
+  patientNotFound,
 };

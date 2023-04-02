@@ -5,7 +5,16 @@ import schemaValidate from "../middlewares/schema.middleware.js";
 
 const userRoutes = Router();
 
-userRoutes.post("/signup", schemaValidate(usersSchemas.signUp), usersControllers.signUp);
-userRoutes.post("/signin", schemaValidate(usersSchemas.signIn), usersControllers.signIn);
+userRoutes.post(
+  "/signup",
+  schemaValidate(usersSchemas.signUp),
+  usersControllers.signUp
+);
+
+userRoutes.post(
+  "/signin",
+  schemaValidate(usersSchemas.signIn),
+  usersControllers.signIn
+);
 
 export default userRoutes;

@@ -1,34 +1,54 @@
-// const data = "2023-04-02";
-// const horario = "17:00";
-// const checkin = "09:00";
-// const checkout = "18:00";
-// const consulta = dayjs(data + horario).day() > 0 && dayjs(data + horario).day() < 6;
-// isBetween((data + checkin), (data + checkout), 'hour');
-
-// console.log(consulta);
-// import dayjs from "dayjs";
-// import isBetween from "dayjs/plugin/isBetween.js";
-// dayjs.extend(isBetween)
-
 import appointmentsServices from "../services/appointments.services.js";
 
-async function byUserId(req, res, next) {
+async function history(req, res, next) {
+  const { patientId } = req.params;
   try {
-    //     const {
-    //       rows: [appointments],
-    //     } = await appointmentsServices.signup({});
-    //     return res.send({ appointments });
+    const { rows: history } = await appointmentsServices.history({
+      id: patientId,
+    });
+
+    return res.send({ history });
   } catch (err) {
     next(err);
   }
 }
 
-async function byDoctorId(req, res, next) {
+async function doctorScheduleDoctor(req, res, next) {
+  const user = res.locals.user;
   try {
-    //     const {
-    //       rows: [appointments],
-    //     } = await appointmentsServices.signup({});
-    //     return res.send({ appointments });
+    const { rows: schedule } = await appointmentsServices.doctorScheduleDoctor({
+      id: user.id,
+    });
+
+    return res.send({ schedule });
+  } catch (err) {
+    next(err);
+  }
+}
+
+async function doctorSchedulePatient(req, res, next) {
+  const { doctorId } = req.params;
+  try {
+    const { rows: schedule } = await appointmentsServices.doctorSchedulePatient(
+      {
+        id: doctorId,
+      }
+    );
+
+    return res.send({ schedule });
+  } catch (err) {
+    next(err);
+  }
+}
+
+async function patientSchedule(req, res, next) {
+  const user = res.locals.user;
+  try {
+    const { rows: schedule } = await appointmentsServices.patientSchedule({
+      id: user.id,
+    });
+
+    return res.send({ schedule });
   } catch (err) {
     next(err);
   }
@@ -65,8 +85,10 @@ async function create(req, res, next) {
 }
 
 export default {
-  byUserId,
-  byDoctorId,
+  history,
+  doctorSchedulePatient,
+  doctorScheduleDoctor,
+  patientSchedule,
   confirm,
   create,
 };

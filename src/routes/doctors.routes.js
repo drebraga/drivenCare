@@ -7,10 +7,35 @@ import authentication from "../middlewares/auth.middleware.js";
 
 const doctorsRoutes = Router();
 
-doctorsRoutes.get("/by-name/:name", authentication, doctorsControllers.doctorsByName);
-doctorsRoutes.get("/by-specialty/:specialty", authentication, doctorsControllers.doctorsBySpecialty);
-doctorsRoutes.get("/by-address/:localization", authentication, doctorsControllers.doctorsByLocalization);
-doctorsRoutes.post("/signup", schemaValidate(doctorsSchemas.signUp), hourValidation, doctorsControllers.signUp);
-doctorsRoutes.post("/signin", schemaValidate(doctorsSchemas.signIn), doctorsControllers.signIn);
+doctorsRoutes.get(
+  "/by-name/:name",
+  authentication,
+  doctorsControllers.doctorsByName
+);
+
+doctorsRoutes.get(
+  "/by-specialty/:specialty",
+  authentication,
+  doctorsControllers.doctorsBySpecialty
+);
+
+doctorsRoutes.get(
+  "/by-address/:localization",
+  authentication,
+  doctorsControllers.doctorsByLocalization
+);
+
+doctorsRoutes.post(
+  "/signup",
+  schemaValidate(doctorsSchemas.signUp),
+  hourValidation,
+  doctorsControllers.signUp
+);
+
+doctorsRoutes.post(
+  "/signin",
+  schemaValidate(doctorsSchemas.signIn),
+  doctorsControllers.signIn
+);
 
 export default doctorsRoutes;
