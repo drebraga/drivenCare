@@ -22,6 +22,40 @@ async function signIn(req, res, next) {
     }
 }
 
+async function doctorsByName(req, res, next) {
+    const { name } = req.params;
+    try {
+        const { rows: doctors } = await userServices.doctorsByName({ name });
+
+        return res.send({ doctors });
+    } catch (err) {
+        next(err);
+    }
+}
+
+async function doctorsBySpecialty(req, res, next) {
+    const { specialty } = req.params;
+    try {
+        const { rows: doctors } = await userServices.doctorsBySpecialty({ specialty });
+
+        return res.send({ doctors });
+    } catch (err) {
+        next(err);
+    }
+}
+
+async function doctorsByLocalization(req, res, next) {
+    const { localization } = req.params;
+    try {
+        const { rows: doctors } = await userServices.doctorsByLocalization({ localization });
+
+        return res.send({ doctors });
+    } catch (err) {
+        next(err);
+    }
+}
+
 export default {
-    signUp, signIn
+    signUp, signIn, doctorsByName,
+    doctorsBySpecialty, doctorsByLocalization
 };
