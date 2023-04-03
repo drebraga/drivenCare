@@ -23,10 +23,28 @@ async function findById({ status, doctorId, id }) {
   );
 }
 
+async function findByIdToCancel({ status, doctorId, id }) {
+  return await db.query(
+    `
+    SELECT * FROM appointments WHERE canceled=$1 AND doctor_id=$2 AND "id"=$3
+    `,
+    [status, doctorId, id]
+  );
+}
+
 async function confirm({ status, doctorId, id }) {
   return await db.query(
     `
-    UPDATE appointments SET confirmed = $1 WHERE doctor_id=$2 AND "id"=$3 
+    UPDATE appointments SET confirmed=$1 WHERE doctor_id=$2 AND "id"=$3
+    `,
+    [status, doctorId, id]
+  );
+}
+
+async function cancel({ status, doctorId, id }) {
+  return await db.query(
+    `
+    UPDATE appointments SET canceled = $1 WHERE doctor_id=$2 AND "id"=$3 
     `,
     [status, doctorId, id]
   );
@@ -83,7 +101,7 @@ async function findByDoctorIdvDoc({ date, id }) {
     FROM appointments a 
     JOIN patients p ON p.id = a.patient_id
     JOIN doctors d ON d.id = a.doctor_id
-    WHERE a.day>=$1 AND a."patient_id"=$2
+    WHERE a.day>=$1 AND a."doctor_id"=$2
     ORDER BY a.day ASC
     `,
     [date, id]
@@ -110,9 +128,11 @@ export default {
   create,
   findDuplicate,
   findById,
+  findByIdToCancel,
   confirm,
   findByPatientId,
   findByDoctorId,
   findByDoctorIdvDoc,
   history,
+  cancel,
 };

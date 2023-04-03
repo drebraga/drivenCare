@@ -27,6 +27,18 @@ async function confirm({ doctorId, id }) {
   await appointmentsRepo.confirm({ status: true, doctorId, id });
 }
 
+async function cancel({ doctorId, id }) {
+  if (isNaN(id)) throw errors.invalidId();
+  const { rowCount } = await appointmentsRepo.findByIdToCancel({
+    status: false,
+    doctorId,
+    id,
+  });
+  if (!rowCount) throw errors.appointmentNotFound();
+
+  await appointmentsRepo.cancel({ status: true, doctorId, id });
+}
+
 async function patientSchedule({ id }) {
   const date = dayjs().format("DD/MM/YYYY");
   return await appointmentsRepo.findByPatientId({ date, id });
@@ -67,4 +79,5 @@ export default {
   doctorSchedulePatient,
   doctorScheduleDoctor,
   history,
+  cancel,
 };

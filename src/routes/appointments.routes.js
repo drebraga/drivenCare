@@ -46,10 +46,17 @@ appointmentsRoutes.post(
 );
 
 appointmentsRoutes.post(
-  "/doctor/:id",
+  "/doctor/confirm/:id",
   authentication,
   userTypeValidate("doctor"),
   appointmentsControllers.confirm
+);
+
+appointmentsRoutes.post(
+  "/doctor/cancel/:id",
+  authentication,
+  userTypeValidate("doctor"),
+  appointmentsControllers.cancel
 );
 
 export default appointmentsRoutes;

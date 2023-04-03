@@ -84,6 +84,19 @@ async function create(req, res, next) {
   }
 }
 
+async function cancel(req, res, next) {
+  try {
+    const id = +req.params.id;
+    const user = res.locals.user;
+
+    await appointmentsServices.cancel({ doctorId: user.id, id });
+
+    return res.sendStatus(202);
+  } catch (err) {
+    next(err);
+  }
+}
+
 export default {
   history,
   doctorSchedulePatient,
@@ -91,4 +104,5 @@ export default {
   patientSchedule,
   confirm,
   create,
+  cancel,
 };
